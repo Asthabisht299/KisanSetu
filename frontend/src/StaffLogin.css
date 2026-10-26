@@ -1,0 +1,114 @@
+
+/* StaffLogin.css */
+
+.staff-login-page {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 16px;
+  background: #f3f7ef;
+  font-family: Arial, sans-serif;
+}
+
+.staff-login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.staff-login-icon {
+  font-size: 42px;
+  text-align: center;
+}
+
+.staff-login-title {
+  text-align: center;
+  color: #245b32;
+  margin-bottom: 8px;
+}
+
+.staff-login-subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 26px;
+  font-size: 14px;
+}
+
+.staff-login-label {
+  display: block;
+  margin: 16px 0 8px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.staff-login-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.staff-login-input:focus {
+  outline: 2px solid #82b58b;
+  border-color: #28753b;
+}
+
+.staff-login-button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 24px;
+  border: none;
+  border-radius: 8px;
+  background: #28753b;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.staff-login-button:hover {
+  background: #205d30;
+}
+
+.staff-login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.staff-login-back {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  background: transparent;
+  color: #28753b;
+  cursor: pointer;
+}
+
+.staff-login-error {
+  padding: 10px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-size: 14px;
+}
+
+.staff-login-footer {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+@media (max-width: 480px) {
+  .staff-login-card {
+    padding: 24px 20px;
+  }
+}
