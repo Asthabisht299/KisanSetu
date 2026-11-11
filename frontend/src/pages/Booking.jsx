@@ -21,7 +21,7 @@ export default function Booking() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(data.message || "Unable to load slots.");
+        throw new Error(data.message || hi ? "बुकिंग का समय नहीं मिल पाया।" : "Unable to load slots.");
       }
 
       setSlots(data.slots || []);
@@ -30,7 +30,7 @@ export default function Booking() {
       setError(
         isHindi
           ? "बुकिंग की जानकारी नहीं मिल रही है। कृपया कुछ देर बाद दोबारा कोशिश करें।"
-          : "Could not load booking slots. Please check that the backend is running."
+          : "बुकिंग के समय नहीं मिल पाए। कृपया इंटरनेट या सर्वर चालू होने की जाँच करें।"
       );
     } finally {
       setLoading(false);
@@ -113,7 +113,7 @@ export default function Booking() {
       if (!response.ok || !data.success) {
         throw new Error(
           data.message ||
-            (isHindi ? "बुकिंग नहीं हो पाई।" : "Unable to create booking.")
+            (isHindi ? "बुकिंग नहीं हो पाई।" : hi ? "बुकिंग नहीं हो पाई।" : "Unable to create booking.")
         );
       }
 
@@ -134,7 +134,7 @@ export default function Booking() {
     } catch (err) {
       setBookingError(
         err.message ||
-          (isHindi ? "बुकिंग नहीं हो पाई। दोबारा कोशिश करें।" : "Unable to create booking.")
+          (isHindi ? "बुकिंग नहीं हो पाई। दोबारा कोशिश करें।" : hi ? "बुकिंग नहीं हो पाई।" : "Unable to create booking.")
       );
     } finally {
       setBookingLoading(false);
@@ -177,7 +177,7 @@ export default function Booking() {
           <p>
             {isHindi
               ? "अपनी फसल, खरीद केंद्र और आने का समय चुनें। फिर बताएं कि आप कितनी फसल लाएंगे।"
-              : "Choose a crop, procurement centre, and time. Then enter how much crop you plan to bring."}
+              : "नीचे दिए गए समय में से चुनें कि आप किस दिन और किस समय अपनी फसल केंद्र पर ला सकते हैं।"}
           </p>
         </div>
       </div>
@@ -202,7 +202,7 @@ export default function Booking() {
         <p>
           {isHindi
             ? "अभी कोई खाली समय नहीं है। कृपया बाद में फिर देखें।"
-            : "No open booking times are available right now. Please check again later."}
+            : "फिलहाल फसल लाने के लिए कोई समय खाली नहीं है। कृपया कुछ समय बाद फिर देखें।"}
         </p>
       ) : (
         <div className="centre-grid">
@@ -238,7 +238,7 @@ export default function Booking() {
 
                 <p>
                   <strong>
-                    {isHindi ? "कुल जगह:" : "Total capacity:"}
+                    {isHindi ? "इस समय की कुल क्षमता:" : "Total capacity:"}
                   </strong>{" "}
                   {Number(slot.capacity_quintals)}{" "}
                   {isHindi ? "क्विंटल" : "quintals"}
@@ -246,7 +246,7 @@ export default function Booking() {
 
                 <p>
                   <strong>
-                    {isHindi ? "अभी खाली जगह:" : "Available:"}
+                    {isHindi ? "अभी कितनी फसल और ली जा सकती है:" : "Available:"}
                   </strong>{" "}
                   {available} {isHindi ? "क्विंटल" : "quintals"}
                 </p>
@@ -255,10 +255,10 @@ export default function Booking() {
                   <strong>{isHindi ? "स्थिति:" : "Status:"}</strong>{" "}
                   {isOpen
                     ? isHindi
-                      ? "बुकिंग के लिए खाली"
+                      ? "समय उपलब्ध है"
                       : "Open for booking"
                     : isHindi
-                      ? "बुकिंग उपलब्ध नहीं"
+                      ? "समय भर चुका है"
                       : "Not available"}
                 </p>
 
@@ -266,7 +266,7 @@ export default function Booking() {
                   <div className="booking-actions">
                     <label htmlFor={`quantity-${slot.id}`}>
                       {isHindi
-                        ? "आप कितनी फसल लाएंगे? (क्विंटल)"
+                        ? "आप कितनी फसल लाएंगे? मात्रा क्विंटल में लिखें।"
                         : "How much crop will you bring? (quintals)"}
                     </label>
 
@@ -301,7 +301,7 @@ export default function Booking() {
                           ? "बुकिंग हो रही है..."
                           : "Booking..."
                         : isHindi
-                          ? "इस समय की बुकिंग करें"
+                          ? "यह समय बुक करें"
                           : "Book This Slot"}
                     </button>
                   </div>
