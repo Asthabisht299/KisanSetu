@@ -313,7 +313,7 @@ export default function StaffDashboard() {
                   </p>
                   <p>
                     <strong>{hi ? "मात्रा:" : "Quantity:"}</strong>{" "}
-                    {booking.quantity_{hi ? "क्विंटल" : "quintals"}} {hi ? "क्विंटल" : "quintals"}
+                    {booking.quantity_quintals} {hi ? "क्विंटल" : "quintals"}
                   </p>
                   <p>
                     <strong>{hi ? "तारीख:" : "Date:"}</strong>{" "}
