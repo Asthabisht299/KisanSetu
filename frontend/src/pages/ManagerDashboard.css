@@ -195,3 +195,210 @@
     padding: 18px;
   }
 }
+
+
+
+/* Manager Bookings Section */
+
+.manager-bookings-panel {
+  margin-bottom: 30px;
+}
+
+.manager-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+  align-items: end;
+}
+
+.manager-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #344054;
+}
+
+.manager-filters input,
+.manager-filters select {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  background: #fff;
+  color: #344054;
+  font: inherit;
+  outline: none;
+}
+
+.manager-filters input:focus,
+.manager-filters select:focus {
+  border-color: #27834b;
+  box-shadow: 0 0 0 3px rgba(39, 131, 75, 0.12);
+}
+
+.manager-filter-actions {
+  display: flex;
+  gap: 10px;
+  grid-column: 1 / -1;
+  align-items: center;
+}
+
+.manager-bookings-summary {
+  margin: 12px 0 16px;
+  color: #475467;
+  font-size: 14px;
+}
+
+.manager-bookings-summary strong {
+  color: #176b3a;
+  font-size: 17px;
+}
+
+.manager-bookings-table {
+  min-width: 1050px;
+}
+.manager-empty {
+  padding: 35px 15px;
+  text-align: center;
+  background: #f8faf9;
+  border-radius: 10px;
+}
+.manager-empty h3 {
+  margin: 0 0 8px;
+  color: #344054;
+}
+
+.manager-empty p {
+  margin: 0;
+  color: #667085;
+}
+
+.manager-status.pending {
+  background: #fff4d6;
+  color: #946200;
+}
+
+.manager-status.confirmed {
+  background: #e5f3ff;
+  color: #1765a3;
+}
+
+.manager-status.checked_in {
+  background: #eee8ff;
+  color: #6941c6;
+}
+
+.manager-status.procurement_in_progress {
+  background: #e7f0ff;
+  color: #315da8;
+}
+
+.manager-status.completed,
+.manager-status.paid {
+  background: #e4f6e9;
+  color: #18743b;
+}
+
+.manager-status.cancelled,
+.manager-status.unpaid {
+  background: #feecec;
+  color: #b42318;
+}
+
+.manager-status.processing {
+  background: #fff0df;
+  color: #a35412;
+}
+
+@media (max-width: 900px) {
+  .manager-filters {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .manager-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .manager-filter-actions {
+    flex-wrap: wrap;
+  }
+
+  .manager-filter-actions button {
+    flex: 1;
+  }
+}
+
+
+/* Manager Overview */
+
+.manager-overview {
+  margin: 25px 0;
+}
+
+.manager-overview-heading {
+  margin-bottom: 18px;
+}
+
+.manager-overview-heading h2 {
+  margin-bottom: 6px;
+  color: #173d2b;
+}
+
+.manager-overview-heading p {
+  color: #667085;
+  font-size: 14px;
+}
+
+.manager-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.manager-stat-card {
+  background: #ffffff;
+  border: 1px solid #e4ebe5;
+  border-radius: 13px;
+  padding: 22px;
+  box-shadow: 0 3px 12px rgba(20, 60, 35, 0.04);
+}
+
+.manager-stat-icon {
+  font-size: 25px;
+}
+
+.manager-stat-card p {
+  margin: 13px 0 7px;
+  color: #667085;
+  font-size: 14px;
+}
+
+.manager-stat-card h3 {
+  margin: 0;
+  color: #176b3a;
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.manager-stat-card h3 small {
+  font-size: 13px;
+  color: #667085;
+}
+
+@media (max-width: 700px) {
+  .manager-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 450px) {
+  .manager-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

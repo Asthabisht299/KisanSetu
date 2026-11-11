@@ -14,6 +14,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
+// -------------------- DATABASE CONNECTION --------------------
+
 const db = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
   user: process.env.DB_USER || "root",
@@ -56,6 +58,7 @@ app.get("/api/centres", async (req, res) => {
        WHERE is_active = TRUE
        ORDER BY name`
     );
+
     res.json(centres);
   } catch (error) {
     console.error("Error fetching centres:", error.message);
@@ -236,6 +239,7 @@ app.post("/api/auth/login", async (req, res) => {
     }
 
     const farmer = farmers[0];
+
     const passwordMatches = await bcrypt.compare(
       password,
       farmer.password_hash
@@ -503,8 +507,7 @@ async function authenticateStaffToken(req, res, next) {
   }
 }
 
-
-/* -------------------- STAFF CENTRE BOOKINGS -------------------- */
+// -------------------- STAFF CENTRE BOOKINGS --------------------
 
 app.get(
   "/api/staff/bookings",
@@ -555,8 +558,7 @@ app.get(
   }
 );
 
-
-/* -------------------- UPDATE STAFF BOOKING STATUS -------------------- */
+// -------------------- UPDATE STAFF BOOKING STATUS --------------------
 
 app.patch(
   "/api/staff/bookings/:id/status",
@@ -643,12 +645,10 @@ app.patch(
 
         return res.status(409).json({
           success: false,
-          message:
-            `Cannot change booking status from ${currentStatus} to ${newStatus}.`,
+          message: `Cannot change booking status from ${currentStatus} to ${newStatus}.`,
         });
       }
 
-      // Release reserved capacity when staff cancel a booking.
       if (newStatus === "cancelled") {
         await connection.execute(
           `UPDATE procurement_slots
@@ -691,10 +691,7 @@ app.patch(
         }
       }
 
-      console.error(
-        "Staff status update error:",
-        error.message
-      );
+      console.error("Staff status update error:", error.message);
 
       return res.status(500).json({
         success: false,
@@ -749,6 +746,7 @@ app.post("/api/bookings", authenticateToken, async (req, res) => {
     }
 
     const slot = slots[0];
+
     const remaining =
       Number(slot.capacity_quintals) - Number(slot.booked_quintals);
 
@@ -982,16 +980,10 @@ app.get("/api/farmers/me", authenticateToken, async (req, res) => {
   }
 });
 
-// -------------------- START SERVER --------------------
-
-app.listen(PORT, () => {
-  console.log(`KisanSetu backend running at http://localhost:${PORT}`);
-});
-
-
-/* ---------- MANAGER SLOT MANAGEMENT ---------- */
+// -------------------- MANAGER SLOT MANAGEMENT --------------------
 
 // List all slots for the manager's assigned centre
+
 app.get(
   "/api/manager/slots",
   authenticateStaffToken,
@@ -1033,8 +1025,8 @@ app.get(
   }
 );
 
-
 // Create a new procurement slot
+
 app.post(
   "/api/manager/slots",
   authenticateStaffToken,
@@ -1046,8 +1038,13 @@ app.post(
       });
     }
 
-    const { crop_type, slot_date, start_time, end_time, capacity_quintals } =
-      req.body;
+    const {
+      crop_type,
+      slot_date,
+      start_time,
+      end_time,
+      capacity_quintals,
+    } = req.body;
 
     const crop = typeof crop_type === "string" ? crop_type.trim() : "";
     const capacity = Number(capacity_quintals);
@@ -1138,8 +1135,8 @@ app.post(
   }
 );
 
-
 // Open or close an existing slot
+
 app.patch(
   "/api/manager/slots/:id/status",
   authenticateStaffToken,
@@ -1195,3 +1192,140 @@ app.patch(
     }
   }
 );
+
+// -------------------- MANAGER BOOKING OVERVIEW --------------------
+
+app.get(
+  "/api/manager/bookings",
+  authenticateStaffToken,
+  async (req, res) => {
+    if (req.staffRole !== "manager") {
+      return res.status(403).json({
+        success: false,
+        message: "Manager access required.",
+      });
+    }
+
+    try {
+      const { date, crop, status, payment_status } = req.query;
+
+      const allowedStatuses = [
+        "pending",
+        "confirmed",
+        "checked_in",
+        "procurement_in_progress",
+        "completed",
+        "cancelled",
+      ];
+
+      const allowedPaymentStatuses = [
+        "unpaid",
+        "processing",
+        "paid",
+      ];
+
+      if (status && !allowedStatuses.includes(status)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid booking status.",
+        });
+      }
+
+      if (
+        payment_status &&
+        !allowedPaymentStatuses.includes(payment_status)
+      ) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid payment status.",
+        });
+      }
+
+      if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid date. Use YYYY-MM-DD.",
+        });
+      }
+
+      const cleanCrop = typeof crop === "string" ? crop.trim() : "";
+
+      if (cleanCrop.length > 50) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid crop name.",
+        });
+      }
+
+      let query = `
+        SELECT
+          b.id AS booking_id,
+          b.booking_reference,
+          f.full_name AS farmer_name,
+          f.phone AS farmer_phone,
+          ps.crop_type,
+          ps.slot_date,
+          ps.start_time,
+          ps.end_time,
+          b.quantity_quintals,
+          b.status,
+          b.payment_status,
+          b.created_at
+        FROM bookings b
+        INNER JOIN farmers f ON b.farmer_id = f.id
+        INNER JOIN procurement_slots ps ON b.slot_id = ps.id
+        WHERE ps.centre_id = ?
+      `;
+
+      const values = [req.centreId];
+
+      if (date) {
+        query += " AND ps.slot_date = ?";
+        values.push(date);
+      }
+
+      if (cleanCrop) {
+        query += " AND ps.crop_type = ?";
+        values.push(cleanCrop);
+      }
+
+      if (status) {
+        query += " AND b.status = ?";
+        values.push(status);
+      }
+
+      if (payment_status) {
+        query += " AND b.payment_status = ?";
+        values.push(payment_status);
+      }
+
+      query += `
+        ORDER BY
+          ps.slot_date DESC,
+          ps.start_time ASC,
+          b.created_at DESC
+      `;
+
+      const [bookings] = await db.execute(query, values);
+
+      return res.json({
+        success: true,
+        count: bookings.length,
+        bookings,
+      });
+    } catch (error) {
+      console.error("Manager bookings error:", error.message);
+
+      return res.status(500).json({
+        success: false,
+        message: "Unable to fetch manager bookings.",
+      });
+    }
+  }
+);
+
+// -------------------- START SERVER --------------------
+
+app.listen(PORT, () => {
+  console.log(`KisanSetu backend running at http://localhost:${PORT}`);
+});
