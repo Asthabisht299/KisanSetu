@@ -5,18 +5,17 @@ import "./StaffDashboard.css";
 import { useLanguage } from "./context/LanguageContext";
 
 const STATUS_OPTIONS = [
-  { value: "pending", label: hi ? "पुष्टि बाकी" : hi ? "पुष्टि बाकी" : "Pending" },
-  { value: "confirmed", label: hi ? "पक्की" : hi ? "पक्की बुकिंग" : "Confirmed" },
+  { value: "pending", label: "Pending" },
+  { value: "confirmed", label: "Confirmed" },
   { value: "checked_in", label: "Checked In" },
-  {
-    value: "procurement_in_progress",
-    label: "Procurement In Progress",
-  },
+  { value: "procurement_in_progress", label: "Procurement In Progress" },
   { value: "completed", label: "Completed" },
   { value: "cancelled", label: "Cancelled" },
 ];
 
-export default function StaffDashboard() {\n  const { language } = useLanguage();\n  const hi = language === "hi";
+export default function StaffDashboard() {
+  const { language } = useLanguage();
+  const hi = language === "hi";
   const navigate = useNavigate();
 
   const [bookings, setBookings] = useState([]);
