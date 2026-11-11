@@ -275,37 +275,37 @@ const completedBookings = bookings.filter(
   <div className="manager-stats-grid">
     <div className="manager-stat-card">
       <span className="manager-stat-icon">📋</span>
-      <p>Total Slots</p>
+      <p>{hi ? "कुल समय" : "Total Slots"}</p>
       <h3>{totalSlots}</h3>
     </div>
 
     <div className="manager-stat-card">
       <span className="manager-stat-icon">🟢</span>
-      <p>Open Slots</p>
+      <p>{hi ? "खाली समय" : "Open Slots"}</p>
       <h3>{openSlots}</h3>
     </div>
 
     <div className="manager-stat-card">
       <span className="manager-stat-icon">🌾</span>
-      <p>Total Capacity</p>
+      <p>{hi ? "कुल क्षमता" : "Total Capacity"}</p>
       <h3>{totalCapacity.toFixed(2)} <small>qtl</small></h3>
     </div>
 
     <div className="manager-stat-card">
       <span className="manager-stat-icon">📦</span>
-      <p>Booked Quantity</p>
+      <p>{hi ? "बुक हुई फसल" : "Booked Quantity"}</p>
       <h3>{bookedQuantity.toFixed(2)} <small>qtl</small></h3>
     </div>
 
     <div className="manager-stat-card">
       <span className="manager-stat-icon">⏳</span>
-      <p>Pending Bookings</p>
+      <p>{hi ? "पुष्टि बाकी" : "Pending Bookings"}</p>
       <h3>{pendingBookings}</h3>
     </div>
 
     <div className="manager-stat-card">
       <span className="manager-stat-icon">✅</span>
-      <p>Completed Bookings</p>
+      <p>{hi ? "पूरी हुई बुकिंग" : "Completed Bookings"}</p>
       <h3>{completedBookings}</h3>
     </div>
   </div>
@@ -314,12 +314,12 @@ const completedBookings = bookings.filter(
 
       {/* CREATE SLOT */}
       <section className="manager-panel">
-        <h2>Create a procurement slot</h2>
-        <p>Add a date and time for farmers to bring their crops.</p>
+        <h2>{hi ? "फसल लाने का समय जोड़ें" : "Create a procurement slot"}</h2>
+        <p>{hi ? "तारीख और समय चुनें, ताकि किसान उस समय फसल ला सकें।" : "Add a date and time for farmers to bring their crops."}</p>
 
         <form className="manager-form" onSubmit={createSlot}>
           <label>
-            Crop
+            {hi ? "फसल" : "Crop"}
             <select
               name="crop_type"
               value={form.crop_type}
@@ -336,7 +336,7 @@ const completedBookings = bookings.filter(
           </label>
 
           <label>
-            Slot date
+            {hi ? "तारीख" : "Slot date"}
             <input
               type="date"
               name="slot_date"
@@ -348,7 +348,7 @@ const completedBookings = bookings.filter(
           </label>
 
           <label>
-            Start time
+            {hi ? "शुरू होने का समय" : "Start time"}
             <input
               type="time"
               name="start_time"
@@ -359,7 +359,7 @@ const completedBookings = bookings.filter(
           </label>
 
           <label>
-            End time
+            {hi ? "खत्म होने का समय" : "End time"}
             <input
               type="time"
               name="end_time"
@@ -370,7 +370,7 @@ const completedBookings = bookings.filter(
           </label>
 
           <label>
-            Capacity (quintals)
+            {hi ? "कितनी फसल ले सकेंगे (क्विंटल)" : "Capacity (quintals)"}
             <input
               type="number"
               name="capacity_quintals"
@@ -392,8 +392,8 @@ const completedBookings = bookings.filter(
       <section className="manager-panel">
         <div className="manager-slots-heading">
           <div>
-            <h2>Procurement slots</h2>
-            <p>Slots belonging to your assigned centre.</p>
+            <h2>{hi ? "फसल लाने के समय" : "Procurement slots"}</h2>
+            <p>{hi ? "यहाँ आपके केंद्र के सभी समय दिखेंगे।" : "Slots belonging to your assigned centre."}</p>
           </div>
 
           <button
@@ -406,22 +406,22 @@ const completedBookings = bookings.filter(
         </div>
 
         {loading ? (
-          <p>Loading slots...</p>
+          <p>{hi ? "समय की जानकारी आ रही है..." : "Loading slots..."}</p>
         ) : slots.length === 0 ? (
-          <p>No slots found. Create your first slot above.</p>
+          <p>{hi ? "अभी कोई समय नहीं जोड़ा गया है। ऊपर से पहला समय जोड़ें।" : "No slots found. Create your first slot above."}</p>
         ) : (
           <div className="manager-table-wrap">
             <table className="manager-table">
               <thead>
                 <tr>
-                  <th>Crop</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Capacity</th>
-                  <th>Booked</th>
-                  <th>Available</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  <th>{hi ? "फसल" : "Crop"}</th>
+                  <th>{hi ? "तारीख" : "Date"}</th>
+                  <th>{hi ? "समय" : "Time"}</th>
+                  <th>{hi ? "कुल क्षमता" : "Capacity"}</th>
+                  <th>{hi ? "बुक हुई मात्रा" : "Booked"}</th>
+                  <th>{hi ? "खाली जगह" : "Available"}</th>
+                  <th>{hi ? "स्थिति" : "Status"}</th>
+                  <th>{hi ? "काम" : "Action"}</th>
                 </tr>
               </thead>
 
@@ -464,8 +464,8 @@ const completedBookings = bookings.filter(
       <section className="manager-panel manager-bookings-panel">
         <div className="manager-slots-heading">
           <div>
-            <h2>Farmer bookings</h2>
-            <p>View bookings made at your assigned procurement centre.</p>
+            <h2>{hi ? "किसानों की बुकिंग" : "Farmer bookings"}</h2>
+            <p>{hi ? "अपने केंद्र पर किसानों की बुकिंग देखें।" : "View bookings made at your assigned procurement centre."}</p>
           </div>
 
           <button
@@ -479,7 +479,7 @@ const completedBookings = bookings.filter(
 
         <form className="manager-filters" onSubmit={applyFilters}>
           <label>
-            Booking date
+            {hi ? "बुकिंग की तारीख" : "Booking date"}
             <input
               type="date"
               name="date"
@@ -489,13 +489,13 @@ const completedBookings = bookings.filter(
           </label>
 
           <label>
-            Crop
+            {hi ? "फसल" : "Crop"}
             <select
               name="crop"
               value={filters.crop}
               onChange={updateFilter}
             >
-              <option value="">All crops</option>
+              <option value="">{hi ? "सभी फसलें" : "All crops"}</option>
               <option value="Wheat">Wheat</option>
               <option value="Rice">Rice</option>
               <option value="Maize">Maize</option>
@@ -506,13 +506,13 @@ const completedBookings = bookings.filter(
           </label>
 
           <label>
-            Booking status
+            {hi ? "बुकिंग की स्थिति" : "Booking status"}
             <select
               name="status"
               value={filters.status}
               onChange={updateFilter}
             >
-              <option value="">All statuses</option>
+              <option value="">{hi ? "सभी स्थितियाँ" : "All statuses"}</option>
               <option value="pending">Pending</option>
               <option value="confirmed">Confirmed</option>
               <option value="checked_in">Checked in</option>
@@ -525,13 +525,13 @@ const completedBookings = bookings.filter(
           </label>
 
           <label>
-            Payment status
+            {hi ? "भुगतान की स्थिति" : "Payment status"}
             <select
               name="payment_status"
               value={filters.payment_status}
               onChange={updateFilter}
             >
-              <option value="">All payments</option>
+              <option value="">{hi ? "सभी भुगतान" : "All payments"}</option>
               <option value="unpaid">Unpaid</option>
               <option value="processing">Processing</option>
               <option value="paid">Paid</option>
@@ -560,10 +560,10 @@ const completedBookings = bookings.filter(
         </div>
 
         {bookingsLoading ? (
-          <p>Loading farmer bookings...</p>
+          <p>{hi ? "किसानों की बुकिंग आ रही है..." : "Loading farmer bookings..."}</p>
         ) : bookings.length === 0 ? (
           <div className="manager-empty">
-            <h3>No bookings found</h3>
+            <h3>{hi ? "कोई बुकिंग नहीं मिली" : "No bookings found"}</h3>
             <p>
               There are no bookings matching the selected filters.
             </p>
@@ -573,15 +573,15 @@ const completedBookings = bookings.filter(
             <table className="manager-table manager-bookings-table">
               <thead>
                 <tr>
-                  <th>Booking ID</th>
-                  <th>Farmer</th>
-                  <th>Phone</th>
-                  <th>Crop</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Quantity</th>
-                  <th>Booking status</th>
-                  <th>Payment</th>
+                  <th>{hi ? "बुकिंग नंबर" : "Booking ID"}</th>
+                  <th>{hi ? "किसान" : "Farmer"}</th>
+                  <th>{hi ? "मोबाइल नंबर" : "Phone"}</th>
+                  <th>{hi ? "फसल" : "Crop"}</th>
+                  <th>{hi ? "तारीख" : "Date"}</th>
+                  <th>{hi ? "समय" : "Time"}</th>
+                  <th>{hi ? "मात्रा" : "Quantity"}</th>
+                  <th>{hi ? "बुकिंग की स्थिति" : "Booking status"}</th>
+                  <th>{hi ? "भुगतान" : "Payment"}</th>
                 </tr>
               </thead>
 
