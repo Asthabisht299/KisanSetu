@@ -139,7 +139,7 @@ export default function Booking() {
     } catch (err) {
       setBookingError(
         err.message ||
-          (isHindi ? "बुकिंग नहीं हो पाई। दोबारा कोशिश करें।" : hi ? "बुकिंग नहीं हो पाई।" : "Unable to create booking.")
+          (isHindi ? "बुकिंग नहीं हो पाई। दोबारा कोशिश करें।" : "Unable to create booking.")
       );
     } finally {
       setBookingLoading(false);
