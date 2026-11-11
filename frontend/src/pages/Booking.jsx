@@ -21,7 +21,7 @@ export default function Booking() {
       const data = await response.json();
 
       if (!response.ok || !data.success) {
-        throw new Error(data.message || hi ? "बुकिंग का समय नहीं मिल पाया।" : "Unable to load slots.");
+        throw new Error(data.message || (isHindi ? "बुकिंग का समय नहीं मिल पाया।" : "Unable to load slots."));
       }
 
       setSlots(data.slots || []);
@@ -118,7 +118,7 @@ export default function Booking() {
       if (!response.ok || !data.success) {
         throw new Error(
           data.message ||
-            (isHindi ? "बुकिंग नहीं हो पाई।" : hi ? "बुकिंग नहीं हो पाई।" : "Unable to create booking.")
+            (isHindi ? "बुकिंग नहीं हो पाई।" : "Unable to create booking.")
         );
       }
 
