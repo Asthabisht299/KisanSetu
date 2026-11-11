@@ -11,7 +11,7 @@ export default function Home() {
       <section className="hero" id="home">
         <div className="hero-content">
           <span className="eyebrow">
-            {isHindi ? "किसानों के लिए स्मार्ट सहायता" : "SMART FARMER ASSISTANCE"}
+            {isHindi ? "किसानों के काम को आसान बनाने के लिए" : "SMART FARMER ASSISTANCE"}
           </span>
 
           <h1>
@@ -37,13 +37,13 @@ export default function Home() {
           </p>
 
           <Link className="primary-button" to="/booking">
-            {isHindi ? "अपनी यात्रा की योजना बनाएं →" : "Plan Your Visit →"}
+            {isHindi ? "फसल लाने का समय चुनें →" : "Plan Your Visit →"}
           </Link>
 
           <div className="hero-note">
             <span>✓</span>{" "}
             {isHindi
-              ? "किसानों के लिए आसान समय-निर्धारण"
+              ? "पहले से समय चुनें, केंद्र पर अपनी बारी से पहुंचें"
               : "Simple scheduling for farmers"}
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function Home() {
               {isHindi ? "खरीद केंद्र देखें" : "Explore centres"}
             </strong>
             <small>
-              {isHindi ? "केंद्रों की सूची देखें" : "View centre listings"}
+              {isHindi ? "कहाँ-कहाँ फसल खरीदी जाती है, देखें" : "View centre listings"}
             </small>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function Home() {
             <strong>{isHindi ? "जानकारी पाएं" : "Stay informed"}</strong>
             <small>
               {isHindi
-                ? "बुकिंग ट्रैकिंग जल्द आएगी"
+                ? "अपनी बुकिंग की स्थिति यहाँ देखें"
                 : "Tracking is coming later"}
             </small>
           </div>
@@ -113,7 +113,7 @@ export default function Home() {
             </h2>
             <p>
               {isHindi
-                ? "आगे बढ़ने के लिए एक विकल्प चुनें।"
+                ? "नीचे दिए गए विकल्पों में से चुनें कि आपको क्या करना है।"
                 : "Choose an option to explore the prototype."}
             </p>
           </div>
@@ -127,11 +127,11 @@ export default function Home() {
             </h3>
             <p>
               {isHindi
-                ? "अपनी फसल की जानकारी और पसंदीदा तारीख दर्ज करें।"
+                ? "फसल और केंद्र चुनें। फिर फसल लाने का खाली समय बुक करें।"
                 : "Enter your crop details and preferred date."}
             </p>
             <Link className="text-button" to="/booking">
-              {isHindi ? "बुकिंग पेज खोलें →" : "Open booking page →"}
+              {isHindi ? "खाली समय देखें →" : "Open booking page →"}
             </Link>
           </article>
 
@@ -140,7 +140,7 @@ export default function Home() {
             <h3>{isHindi ? "खरीद केंद्र देखें" : "Explore centres"}</h3>
             <p>
               {isHindi
-                ? "उपलब्ध खरीद केंद्रों की सूची देखें।"
+                ? "अपने इलाके के खरीद केंद्र का पता और जानकारी देखें।"
                 : "View sample procurement centre listings."}
             </p>
             <Link className="text-button" to="/centres">
