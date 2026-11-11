@@ -71,7 +71,7 @@ export default function StaffDashboard() {
 
       if (!response.ok || !data.success) {
         throw new Error(
-          data.message || hi ? "बुकिंग की जानकारी नहीं मिल पाई।" : "Unable to load bookings."
+          data.message || (hi ? "बुकिंग की जानकारी नहीं मिल पाई।" : "Unable to load bookings.")
         );
       }
 
@@ -170,7 +170,7 @@ export default function StaffDashboard() {
 
       if (!response.ok || !data.success) {
         throw new Error(
-          data.message || hi ? "बुकिंग की स्थिति नहीं बदली जा सकी।" : "Unable to update booking status."
+          data.message || (hi ? "बुकिंग की स्थिति नहीं बदली जा सकी।" : "Unable to update booking status.")
         );
       }
 
@@ -193,7 +193,7 @@ export default function StaffDashboard() {
       // Fetch again immediately after a successful update.
       await fetchBookings();
     } catch (err) {
-      setError(err.message || hi ? "बुकिंग की स्थिति नहीं बदली जा सकी।" : "Unable to update booking status.");
+      setError(err.message || (hi ? "बुकिंग की स्थिति नहीं बदली जा सकी।" : "Unable to update booking status."));
     } finally {
       setSavingId(null);
     }
@@ -203,7 +203,7 @@ export default function StaffDashboard() {
 
   const totalQuantity = bookings.reduce(
     (total, booking) =>
-      total + Number(booking.quantity_{hi ? "क्विंटल" : "quintals"} || 0),
+      total + Number(booking.quantity_quintals || 0),
     0
   );
 
@@ -221,17 +221,17 @@ export default function StaffDashboard() {
         <div>
           <h1>{hi ? "कर्मचारी डैशबोर्ड" : "Staff Dashboard"}</h1>
           <p>
-            Welcome, {staffData?.full_name || hi ? "कर्मचारी" : "Staff Member"}!
+            {hi ? "नमस्ते" : "Welcome"}, {staffData?.full_name || (hi ? "कर्मचारी" : "Staff Member")}!
           </p>
           <p>
-            Centre:{" "}
-            {staffData?.centre_name || hi ? "आपका तय किया गया केंद्र" : "Your assigned centre"}
+            {hi ? "केंद्र: " : "Centre: "}
+            {staffData?.centre_name || (hi ? "आपका तय किया गया केंद्र" : "Your assigned centre")}
           </p>
           <p>
             <small>
               {hi ? "हर 10 सेकंड में जानकारी अपने आप अपडेट होगी" : "Auto-refresh: every 10 seconds"}
               {lastUpdated &&
-                ` · Last updated: ${lastUpdated.toLocaleTimeString()}`}
+                ` · ${hi ? "आखिरी बार अपडेट:" : "Last updated:"} ${lastUpdated.toLocaleTimeString()}`}
             </small>
           </p>
         </div>
@@ -260,7 +260,7 @@ export default function StaffDashboard() {
         <div className="staff-stat-card">
           <h3>{hi ? "कुल फसल" : "Total Quantity"}</h3>
           <p>
-            {loading ? "..." : `${totalQuantity.toFixed(2)} {hi ? "क्विंटल" : "quintals"}`}
+            {loading ? "..." : `${totalQuantity.toFixed(2)} ${hi ? "क्विंटल" : "quintals"}`}
           </p>
         </div>
       </div>
@@ -365,7 +365,7 @@ export default function StaffDashboard() {
                       }
                       onClick={() => handleStatusUpdate(booking)}
                     >
-                      {isSaving ? hi ? "सेव हो रहा है..." : "{hi ? "सेव हो रहा है..." : "Saving..."}" : hi ? "स्थिति सेव करें" : "{hi ? "स्थिति सेव करें" : "Save Status"}"}
+                      {isSaving ? (hi ? "सेव हो रहा है..." : "Saving...") : (hi ? "स्थिति सेव करें" : "Save Status")}
                     </button>
                   </div>
                 </div>
