@@ -57,7 +57,7 @@ export default function ManagerDashboard() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || hi ? "स्लॉट की जानकारी नहीं मिल पाई।" : "Unable to load slots.");
+        throw new Error(data.message || (hi ? "स्लॉट की जानकारी नहीं मिल पाई।" : "Unable to load slots."));
       }
 
       setSlots(data.slots || []);
@@ -97,7 +97,7 @@ export default function ManagerDashboard() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || hi ? "बुकिंग की जानकारी नहीं मिल पाई।" : "Unable to load bookings.");
+        throw new Error(data.message || (hi ? "बुकिंग की जानकारी नहीं मिल पाई।" : "Unable to load bookings."));
       }
 
       setBookings(data.bookings || []);
@@ -148,7 +148,7 @@ export default function ManagerDashboard() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || hi ? "समय नहीं जोड़ा जा सका।" : "Could not create slot.");
+        throw new Error(data.message || (hi ? "समय नहीं जोड़ा जा सका।" : "Could not create slot."));
       }
 
       setMessage(hi ? "फसल लाने का समय जोड़ दिया गया है।" : "Slot created successfully!");
@@ -184,10 +184,10 @@ export default function ManagerDashboard() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || hi ? "समय की स्थिति नहीं बदली जा सकी।" : "Could not update slot.");
+        throw new Error(data.message || (hi ? "समय की स्थिति नहीं बदली जा सकी।" : "Could not update slot."));
       }
 
-      setMessage(data.message || hi ? "समय की स्थिति बदल दी गई है।" : "Slot status updated.");
+      setMessage(data.message || (hi ? "समय की स्थिति बदल दी गई है।" : "Slot status updated."));
       await loadSlots();
     } catch (err) {
       setError(err.message);
@@ -258,8 +258,8 @@ const completedBookings = bookings.filter(
       <header className="manager-header">
         <div>
           <p className="manager-eyebrow">KISANSETU MANAGEMENT</p>
-          <h1>Manager Dashboard</h1>
-          <p>Manage procurement slots and farmer bookings.</p>
+          <h1>{hi ? "मैनेजर डैशबोर्ड" : "Manager Dashboard"}</h1>
+          <p>{hi ? "किसान कब फसल लाएंगे, उसका समय और बुकिंग संभालें।" : "Manage procurement slots and farmer bookings."}</p>
         </div>
 
         <button className="manager-logout" onClick={logout}>
@@ -517,14 +517,14 @@ const completedBookings = bookings.filter(
               onChange={updateFilter}
             >
               <option value="">{hi ? "सभी स्थितियाँ" : "All statuses"}</option>
-              <option value="pending">Pending</option>
-              <option value="confirmed">Confirmed</option>
-              <option value="checked_in">Checked in</option>
+              <option value="pending">{hi ? "पुष्टि बाकी" : "Pending"}</option>
+              <option value="confirmed">{hi ? "पक्की" : "Confirmed"}</option>
+              <option value="checked_in">{hi ? "केंद्र पहुँच गए" : "Checked in"}</option>
               <option value="procurement_in_progress">
                 Procurement in progress
               </option>
-              <option value="completed">Completed</option>
-              <option value="cancelled">Cancelled</option>
+              <option value="completed">{hi ? "पूरी हुई" : "Completed"}</option>
+              <option value="cancelled">{hi ? "रद्द" : "Cancelled"}</option>
             </select>
           </label>
 
@@ -536,9 +536,9 @@ const completedBookings = bookings.filter(
               onChange={updateFilter}
             >
               <option value="">{hi ? "सभी भुगतान" : "All payments"}</option>
-              <option value="unpaid">Unpaid</option>
-              <option value="processing">Processing</option>
-              <option value="paid">Paid</option>
+              <option value="unpaid">{hi ? "भुगतान बाकी" : "Unpaid"}</option>
+              <option value="processing">{hi ? "जाँच में" : "Processing"}</option>
+              <option value="paid">{hi ? "भुगतान हो गया" : "Paid"}</option>
             </select>
           </label>
 
