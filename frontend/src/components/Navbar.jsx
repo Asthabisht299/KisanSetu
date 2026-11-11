@@ -1,15 +1,19 @@
-
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function Navbar() {
   const { language, changeLanguage } = useLanguage();
+  const [menuOpen, setMenuOpen] = useState(false);
   const isHindi = language === "hi";
+
+  const closeMenu = () => setMenuOpen(false);
+  const linkClass = ({ isActive }) => isActive ? "active" : "";
 
   return (
     <header className="navbar">
-      <Link className="brand" to="/">
-        <span className="brand-icon">🌾</span>
+      <Link className="brand" to="/" onClick={closeMenu} aria-label="KisanSetu home">
+        <span className="brand-icon" aria-hidden="true">🌾</span>
         <span>
           KisanSetu
           <small>
@@ -20,33 +24,29 @@ export default function Navbar() {
         </span>
       </Link>
 
-      <nav className="nav-links">
-        <Link to="/">{isHindi ? "होम" : "Home"}</Link>
-        <Link to="/booking">
-          {isHindi ? "स्लॉट बुक करें" : "Book a Slot"}
-        </Link>
-        <Link to="/my-bookings">
-          {isHindi ? "मेरी बुकिंग" : "My Bookings"}
-        </Link>
-        <Link to="/centres">
-          {isHindi ? "खरीद केंद्र" : "Procurement Centres"}
-        </Link>
-        <Link to="/login">{isHindi ? "लॉगिन" : "Login"}</Link>
-        <Link to="/register">
-          {isHindi ? "रजिस्टर करें" : "Register"}
-        </Link>
+      <button
+        className="nav-toggle"
+        type="button"
+        aria-expanded={menuOpen}
+        aria-controls="primary-navigation"
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        {menuOpen ? (isHindi ? "बंद करें ✕" : "Close ✕") : (isHindi ? "मेन्यू ☰" : "Menu ☰")}
+      </button>
 
+      <nav id="primary-navigation" className={`nav-links ${menuOpen ? "is-open" : ""}`} aria-label="Main navigation">
+        <NavLink className={linkClass} to="/" onClick={closeMenu}>{isHindi ? "होम" : "Home"}</NavLink>
+        <NavLink className={linkClass} to="/booking" onClick={closeMenu}>{isHindi ? "स्लॉट बुक करें" : "Book a Slot"}</NavLink>
+        <NavLink className={linkClass} to="/my-bookings" onClick={closeMenu}>{isHindi ? "मेरी बुकिंग" : "My Bookings"}</NavLink>
+        <NavLink className={linkClass} to="/centres" onClick={closeMenu}>{isHindi ? "खरीद केंद्र" : "Procurement Centres"}</NavLink>
+        <NavLink className={linkClass} to="/login" onClick={closeMenu}>{isHindi ? "लॉगिन" : "Login"}</NavLink>
+        <NavLink className={linkClass} to="/register" onClick={closeMenu}>{isHindi ? "रजिस्टर करें" : "Register"}</NavLink>
+        <label className="sr-only" htmlFor="language-select">Choose language</label>
         <select
-          aria-label="Choose language"
+          id="language-select"
           value={language}
           onChange={(event) => changeLanguage(event.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: "1px solid #ccc",
-            background: "white",
-            cursor: "pointer",
-          }}
+          aria-label="Choose language"
         >
           <option value="en">English</option>
           <option value="hi">हिंदी</option>
