@@ -172,3 +172,8 @@
     gap: 18px;
   }
 }
+
+
+/* Consistent form sizing and clear keyboard focus */
+.register-field input { font-size: 14px; }
+.register-field input:focus-visible { outline: 3px solid rgba(66, 139, 83, .25); outline-offset: 2px; }
