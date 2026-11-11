@@ -41,6 +41,11 @@ export default function Booking() {
     fetchSlots();
   }, []);
 
+  function cropLabel(crop) {
+    if (!isHindi) return crop;
+    return ({ Wheat: "गेहूँ", Rice: "धान", Maize: "मक्का", Mustard: "सरसों", Barley: "जौ", Other: "अन्य" })[crop] || crop;
+  }
+
   function formatDate(dateValue) {
     const date = new Date(dateValue);
 
@@ -213,7 +218,7 @@ export default function Booking() {
             return (
               <article className="centre-card" key={slot.id}>
                 <span className="centre-icon">🌾</span>
-                <h3>{slot.crop_type}</h3>
+                <h3>{cropLabel(slot.crop_type)}</h3>
 
                 <p>
                   <strong>{isHindi ? "खरीद केंद्र:" : "Centre:"}</strong>{" "}
