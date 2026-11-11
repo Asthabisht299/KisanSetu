@@ -201,7 +201,7 @@ export default function StaffDashboard() {
 
   const totalQuantity = bookings.reduce(
     (total, booking) =>
-      total + Number(booking.quantity_quintals || 0),
+      total + Number(booking.quantity_{hi ? "क्विंटल" : "quintals"} || 0),
     0
   );
 
@@ -227,7 +227,7 @@ export default function StaffDashboard() {
           </p>
           <p>
             <small>
-              Auto-refresh: every 10 seconds
+              {hi ? "हर 10 सेकंड में जानकारी अपने आप अपडेट होगी" : "Auto-refresh: every 10 seconds"}
               {lastUpdated &&
                 ` · Last updated: ${lastUpdated.toLocaleTimeString()}`}
             </small>
@@ -258,7 +258,7 @@ export default function StaffDashboard() {
         <div className="staff-stat-card">
           <h3>{hi ? "कुल फसल" : "Total Quantity"}</h3>
           <p>
-            {loading ? "..." : `${totalQuantity.toFixed(2)} quintals`}
+            {loading ? "..." : `${totalQuantity.toFixed(2)} {hi ? "क्विंटल" : "quintals"}`}
           </p>
         </div>
       </div>
@@ -266,7 +266,7 @@ export default function StaffDashboard() {
       <div className="staff-bookings-section">
         <h2>{hi ? "आपके केंद्र की बुकिंग" : "Bookings for Your Centre"}</h2>
 
-        {loading && <p>Loading bookings...</p>}
+        {loading && <p>{hi ? "बुकिंग की जानकारी आ रही है..." : "Loading bookings..."}</p>}
 
         {!loading && error && (
           <p className="staff-error" role="alert">
@@ -277,7 +277,7 @@ export default function StaffDashboard() {
         {!loading && notice && <p role="status">{notice}</p>}
 
         {!loading && !error && bookings.length === 0 && (
-          <p>No bookings found for your centre yet.</p>
+          <p>{hi ? "अभी आपके केंद्र पर कोई बुकिंग नहीं हुई है।" : "No bookings found for your centre yet."}</p>
         )}
 
         {!loading && bookings.length > 0 && (
@@ -301,34 +301,34 @@ export default function StaffDashboard() {
                   </div>
 
                   <p>
-                    <strong>Farmer:</strong> {booking.farmer_name}
+                    <strong>{hi ? "किसान:" : "Farmer:"}</strong> {booking.farmer_name}
                   </p>
                   <p>
-                    <strong>Phone:</strong> {booking.farmer_phone}
+                    <strong>{hi ? "मोबाइल नंबर:" : "Phone:"}</strong> {booking.farmer_phone}
                   </p>
                   <p>
-                    <strong>Crop:</strong> {booking.crop_type}
+                    <strong>{hi ? "फसल:" : "Crop:"}</strong> {booking.crop_type}
                   </p>
                   <p>
-                    <strong>Quantity:</strong>{" "}
-                    {booking.quantity_quintals} quintals
+                    <strong>{hi ? "मात्रा:" : "Quantity:"}</strong>{" "}
+                    {booking.quantity_{hi ? "क्विंटल" : "quintals"}} {hi ? "क्विंटल" : "quintals"}
                   </p>
                   <p>
-                    <strong>Date:</strong>{" "}
+                    <strong>{hi ? "तारीख:" : "Date:"}</strong>{" "}
                     {String(booking.slot_date).slice(0, 10)}
                   </p>
                   <p>
-                    <strong>Time:</strong>{" "}
+                    <strong>{hi ? "समय:" : "Time:"}</strong>{" "}
                     {String(booking.start_time).slice(0, 5)} –{" "}
                     {String(booking.end_time).slice(0, 5)}
                   </p>
                   <p>
-                    <strong>Payment:</strong> {booking.payment_status}
+                    <strong>{hi ? "भुगतान:" : "Payment:"}</strong> {booking.payment_status}
                   </p>
 
                   <div className="staff-status-controls">
                     <label htmlFor={`status-${booking.id}`}>
-                      Update Booking Status
+                      {hi ? "बुकिंग की स्थिति बदलें" : "Update Booking Status"}
                     </label>
 
                     <select
@@ -363,7 +363,7 @@ export default function StaffDashboard() {
                       }
                       onClick={() => handleStatusUpdate(booking)}
                     >
-                      {isSaving ? hi ? "सेव हो रहा है..." : "Saving..." : hi ? "स्थिति सेव करें" : "Save Status"}
+                      {isSaving ? hi ? "सेव हो रहा है..." : "{hi ? "सेव हो रहा है..." : "Saving..."}" : hi ? "स्थिति सेव करें" : "{hi ? "स्थिति सेव करें" : "Save Status"}"}
                     </button>
                   </div>
                 </div>
