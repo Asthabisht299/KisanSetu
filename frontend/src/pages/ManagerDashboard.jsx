@@ -257,13 +257,13 @@ const completedBookings = bookings.filter(
     <div className="manager-page">
       <header className="manager-header">
         <div>
-          <p className="manager-eyebrow">KISANSETU MANAGEMENT</p>
+          <p className="manager-eyebrow">{hi ? "किसानसेतु प्रबंधन" : "KISANSETU MANAGEMENT"}</p>
           <h1>{hi ? "मैनेजर डैशबोर्ड" : "Manager Dashboard"}</h1>
           <p>{hi ? "किसान कब फसल लाएंगे, उसका समय और बुकिंग संभालें।" : "Manage procurement slots and farmer bookings."}</p>
         </div>
 
         <button className="manager-logout" onClick={logout}>
-          Log out
+          {hi ? "लॉगआउट" : "Log out"}
         </button>
       </header>
 
@@ -272,7 +272,7 @@ const completedBookings = bookings.filter(
 {/* MANAGER OVERVIEW */}
 <section className="manager-overview">
   <div className="manager-overview-heading">
-    <h2>Procurement Overview</h2>
+    <h2>{hi ? "केंद्र का हाल" : "Procurement Overview"}</h2>
     <p>A quick summary of your centre's activity.</p>
   </div>
 
@@ -292,13 +292,13 @@ const completedBookings = bookings.filter(
     <div className="manager-stat-card">
       <span className="manager-stat-icon">🌾</span>
       <p>{hi ? "कुल क्षमता" : "Total Capacity"}</p>
-      <h3>{totalCapacity.toFixed(2)} <small>qtl</small></h3>
+      <h3>{totalCapacity.toFixed(2)} <small>{hi ? "क्विंटल" : "qtl"}</small></h3>
     </div>
 
     <div className="manager-stat-card">
       <span className="manager-stat-icon">📦</span>
       <p>{hi ? "बुक हुई फसल" : "Booked Quantity"}</p>
-      <h3>{bookedQuantity.toFixed(2)} <small>qtl</small></h3>
+      <h3>{bookedQuantity.toFixed(2)} <small>{hi ? "क्विंटल" : "qtl"}</small></h3>
     </div>
 
     <div className="manager-stat-card">
@@ -443,7 +443,7 @@ const completedBookings = bookings.filter(
                     <td>{slot.available_quintals}</td>
                     <td>
                       <span className={`manager-status ${slot.status}`}>
-                        {slot.status}
+                        {hi ? ({ open: "खुला", closed: "बंद", cancelled: "रद्द" }[slot.status] || slot.status) : slot.status}
                       </span>
                     </td>
                     <td>
