@@ -234,6 +234,10 @@ const completedBookings = bookings.filter(
     navigate("/staff-login");
   }
 
+  function cropLabel(crop) {
+    return hi ? ({ Wheat: "गेहूँ", Rice: "धान", Maize: "मक्का", Mustard: "सरसों", Barley: "जौ", Other: "अन्य" }[crop] || crop) : crop;
+  }
+
   function formatDate(date) {
     if (!date) return "—";
 
@@ -326,12 +330,12 @@ const completedBookings = bookings.filter(
               onChange={updateForm}
               required
             >
-              <option>Wheat</option>
-              <option>Rice</option>
-              <option>Maize</option>
-              <option>Mustard</option>
-              <option>Barley</option>
-              <option>Other</option>
+              <option value="Wheat">{hi ? "गेहूँ" : "Wheat"}</option>
+              <option value="Rice">{hi ? "धान" : "Rice"}</option>
+              <option value="Maize">{hi ? "मक्का" : "Maize"}</option>
+              <option value="Mustard">{hi ? "सरसों" : "Mustard"}</option>
+              <option value="Barley">{hi ? "जौ" : "Barley"}</option>
+              <option value="Other">{hi ? "अन्य" : "Other"}</option>
             </select>
           </label>
 
@@ -428,7 +432,7 @@ const completedBookings = bookings.filter(
               <tbody>
                 {slots.map((slot) => (
                   <tr key={slot.id}>
-                    <td>{slot.crop_type}</td>
+                    <td>{cropLabel(slot.crop_type)}</td>
                     <td>{formatDate(slot.slot_date)}</td>
                     <td>
                       {formatTime(slot.start_time)}–
@@ -595,7 +599,7 @@ const completedBookings = bookings.filter(
                     </td>
                     <td>{booking.farmer_name || booking.full_name || "—"}</td>
                     <td>{booking.farmer_phone || booking.phone || "—"}</td>
-                    <td>{booking.crop_type || "—"}</td>
+                    <td>{cropLabel(booking.crop_type) || "—"}</td>
                     <td>{formatDate(booking.slot_date)}</td>
                     <td>
                       {formatTime(booking.start_time)}–
@@ -618,7 +622,7 @@ const completedBookings = bookings.filter(
                       <span
                         className={`manager-status ${booking.payment_status}`}
                       >
-                        {booking.payment_status || "unknown"}
+                        {hi ? ({ unpaid: "भुगतान बाकी", processing: "जाँच में", paid: "भुगतान हो गया" }[booking.payment_status] || "जानकारी नहीं") : (booking.payment_status || "unknown")}
                       </span>
                     </td>
                   </tr>
