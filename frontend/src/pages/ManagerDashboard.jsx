@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ManagerDashboard.css";
+import { useLanguage } from "../context/LanguageContext";
 
 const API = "http://localhost:5000/api";
 
@@ -20,7 +21,7 @@ const initialFilters = {
   payment_status: "",
 };
 
-export default function ManagerDashboard() {
+export default function ManagerDashboard() {\n  const { language } = useLanguage();\n  const hi = language === "hi";
   const navigate = useNavigate();
 
   const [slots, setSlots] = useState([]);
@@ -54,7 +55,7 @@ export default function ManagerDashboard() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Unable to load slots.");
+        throw new Error(data.message || hi ? "स्लॉट की जानकारी नहीं मिल पाई।" : "Unable to load slots.");
       }
 
       setSlots(data.slots || []);
@@ -94,7 +95,7 @@ export default function ManagerDashboard() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Unable to load bookings.");
+        throw new Error(data.message || hi ? "बुकिंग की जानकारी नहीं मिल पाई।" : "Unable to load bookings.");
       }
 
       setBookings(data.bookings || []);
@@ -145,10 +146,10 @@ export default function ManagerDashboard() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Could not create slot.");
+        throw new Error(data.message || hi ? "समय नहीं जोड़ा जा सका।" : "Could not create slot.");
       }
 
-      setMessage("Slot created successfully!");
+      setMessage(hi ? "फसल लाने का समय जोड़ दिया गया है।" : "Slot created successfully!");
       setForm(initialForm);
 
       await loadSlots();
@@ -181,10 +182,10 @@ export default function ManagerDashboard() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Could not update slot.");
+        throw new Error(data.message || hi ? "समय की स्थिति नहीं बदली जा सकी।" : "Could not update slot.");
       }
 
-      setMessage(data.message || "Slot status updated.");
+      setMessage(data.message || hi ? "समय की स्थिति बदल दी गई है।" : "Slot status updated.");
       await loadSlots();
     } catch (err) {
       setError(err.message);
@@ -380,7 +381,7 @@ const completedBookings = bookings.filter(
           </label>
 
           <button className="manager-primary" disabled={saving}>
-            {saving ? "Creating..." : "＋ Create Slot"}
+            {saving ? hi ? "जोड़ा जा रहा है..." : "Creating..." : hi ? "＋ समय जोड़ें" : "＋ Create Slot"}
           </button>
         </form>
       </section>
@@ -398,7 +399,7 @@ const completedBookings = bookings.filter(
             onClick={loadSlots}
             disabled={loading}
           >
-            {loading ? "Loading..." : "Refresh"}
+            {loading ? hi ? "लोड हो रहा है..." : "Loading..." : hi ? "फिर से देखें" : "Refresh"}
           </button>
         </div>
 
@@ -445,7 +446,7 @@ const completedBookings = bookings.filter(
                           className="manager-toggle"
                           onClick={() => changeStatus(slot)}
                         >
-                          {slot.status === "open" ? "Close" : "Reopen"}
+                          {slot.status === "open" ? hi ? "बंद करें" : "Close" : hi ? "फिर खोलें" : "Reopen"}
                         </button>
                       )}
                     </td>
@@ -470,7 +471,7 @@ const completedBookings = bookings.filter(
             onClick={() => loadBookings()}
             disabled={bookingsLoading}
           >
-            {bookingsLoading ? "Loading..." : "Refresh"}
+            {bookingsLoading ? hi ? "लोड हो रहा है..." : "Loading..." : hi ? "फिर से देखें" : "Refresh"}
           </button>
         </div>
 
