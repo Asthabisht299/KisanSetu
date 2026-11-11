@@ -2,20 +2,21 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./StaffDashboard.css";
+import { useLanguage } from "./context/LanguageContext";
 
 const STATUS_OPTIONS = [
-  { value: "pending", label: "Pending" },
-  { value: "confirmed", label: "Confirmed" },
-  { value: "checked_in", label: "Checked In" },
+  { value: "pending", label: hi ? "पुष्टि बाकी" : hi ? "पुष्टि बाकी" : "Pending" },
+  { value: "confirmed", label: hi ? "पक्की" : hi ? "पक्की बुकिंग" : "Confirmed" },
+  { value: "checked_in", label: hi ? "केंद्र पहुँच गए" : "Checked In" },
   {
     value: "procurement_in_progress",
-    label: "Procurement In Progress",
+    label: hi ? "फसल की जाँच चल रही है" : "Procurement In Progress",
   },
-  { value: "completed", label: "Completed" },
-  { value: "cancelled", label: "Cancelled" },
+  { value: "completed", label: hi ? "पूरी हुई" : "Completed" },
+  { value: "cancelled", label: hi ? "रद्द" : "Cancelled" },
 ];
 
-export default function StaffDashboard() {
+export default function StaffDashboard() {\n  const { language } = useLanguage();\n  const hi = language === "hi";
   const navigate = useNavigate();
 
   const [bookings, setBookings] = useState([]);
@@ -71,7 +72,7 @@ export default function StaffDashboard() {
 
       if (!response.ok || !data.success) {
         throw new Error(
-          data.message || "Unable to load bookings."
+          data.message || hi ? "बुकिंग की जानकारी नहीं मिल पाई।" : "Unable to load bookings."
         );
       }
 
@@ -138,7 +139,7 @@ export default function StaffDashboard() {
     const newStatus = booking.selectedStatus || booking.status;
 
     if (newStatus === booking.status) {
-      setNotice("No status changes to save.");
+      setNotice(hi ? "बदलने के लिए कोई नई स्थिति नहीं है।" : "No status changes to save.");
       return;
     }
 
@@ -170,7 +171,7 @@ export default function StaffDashboard() {
 
       if (!response.ok || !data.success) {
         throw new Error(
-          data.message || "Unable to update booking status."
+          data.message || hi ? "बुकिंग की स्थिति नहीं बदली जा सकी।" : "Unable to update booking status."
         );
       }
 
@@ -193,7 +194,7 @@ export default function StaffDashboard() {
       // Fetch again immediately after a successful update.
       await fetchBookings();
     } catch (err) {
-      setError(err.message || "Unable to update booking status.");
+      setError(err.message || hi ? "बुकिंग की स्थिति नहीं बदली जा सकी।" : "Unable to update booking status.");
     } finally {
       setSavingId(null);
     }
@@ -217,13 +218,13 @@ export default function StaffDashboard() {
     <div className="staff-dashboard">
       <div className="staff-dashboard-header">
         <div>
-          <h1>Staff Dashboard</h1>
+          <h1>{hi ? "कर्मचारी डैशबोर्ड" : "Staff Dashboard"}</h1>
           <p>
-            Welcome, {staffData?.full_name || "Staff Member"}!
+            Welcome, {staffData?.full_name || hi ? "कर्मचारी" : "Staff Member"}!
           </p>
           <p>
             Centre:{" "}
-            {staffData?.centre_name || "Your assigned centre"}
+            {staffData?.centre_name || hi ? "आपका तय किया गया केंद्र" : "Your assigned centre"}
           </p>
           <p>
             <small>
@@ -241,22 +242,22 @@ export default function StaffDashboard() {
 
       <div className="staff-stats">
         <div className="staff-stat-card">
-          <h3>Total Bookings</h3>
+          <h3>{hi ? "कुल बुकिंग" : "Total Bookings"}</h3>
           <p>{loading ? "..." : bookings.length}</p>
         </div>
 
         <div className="staff-stat-card">
-          <h3>Confirmed</h3>
+          <h3>{hi ? "पक्की बुकिंग" : "Confirmed"}</h3>
           <p>{loading ? "..." : confirmedBookings}</p>
         </div>
 
         <div className="staff-stat-card">
-          <h3>Pending</h3>
+          <h3>{hi ? "पुष्टि बाकी" : "Pending"}</h3>
           <p>{loading ? "..." : pendingBookings}</p>
         </div>
 
         <div className="staff-stat-card">
-          <h3>Total Quantity</h3>
+          <h3>{hi ? "कुल फसल" : "Total Quantity"}</h3>
           <p>
             {loading ? "..." : `${totalQuantity.toFixed(2)} quintals`}
           </p>
@@ -264,7 +265,7 @@ export default function StaffDashboard() {
       </div>
 
       <div className="staff-bookings-section">
-        <h2>Bookings for Your Centre</h2>
+        <h2>{hi ? "आपके केंद्र की बुकिंग" : "Bookings for Your Centre"}</h2>
 
         {loading && <p>Loading bookings...</p>}
 
@@ -363,7 +364,7 @@ export default function StaffDashboard() {
                       }
                       onClick={() => handleStatusUpdate(booking)}
                     >
-                      {isSaving ? "Saving..." : "Save Status"}
+                      {isSaving ? hi ? "सेव हो रहा है..." : "Saving..." : hi ? "स्थिति सेव करें" : "Save Status"}
                     </button>
                   </div>
                 </div>
