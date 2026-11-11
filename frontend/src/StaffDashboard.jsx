@@ -199,6 +199,8 @@ export default function StaffDashboard() {
     }
   };
 
+  const cropLabel = (crop) => hi ? ({ Wheat: "गेहूँ", Rice: "धान", Maize: "मक्का", Mustard: "सरसों", Barley: "जौ", Other: "अन्य" }[crop] || crop) : crop;
+
   const totalQuantity = bookings.reduce(
     (total, booking) =>
       total + Number(booking.quantity_{hi ? "क्विंटल" : "quintals"} || 0),
@@ -296,7 +298,7 @@ export default function StaffDashboard() {
                     <span
                       className={`booking-status ${booking.status}`}
                     >
-                      {booking.status.replaceAll("_", " ")}
+                      {hi ? ({ pending: "पुष्टि बाकी", confirmed: "पक्की", checked_in: "केंद्र पहुँच गए", procurement_in_progress: "फसल की जाँच चल रही है", completed: "पूरी हुई", cancelled: "रद्द" }[booking.status] || booking.status) : booking.status.replaceAll("_", " ")}
                     </span>
                   </div>
 
@@ -307,7 +309,7 @@ export default function StaffDashboard() {
                     <strong>{hi ? "मोबाइल नंबर:" : "Phone:"}</strong> {booking.farmer_phone}
                   </p>
                   <p>
-                    <strong>{hi ? "फसल:" : "Crop:"}</strong> {booking.crop_type}
+                    <strong>{hi ? "फसल:" : "Crop:"}</strong> {cropLabel(booking.crop_type)}
                   </p>
                   <p>
                     <strong>{hi ? "मात्रा:" : "Quantity:"}</strong>{" "}
@@ -323,7 +325,7 @@ export default function StaffDashboard() {
                     {String(booking.end_time).slice(0, 5)}
                   </p>
                   <p>
-                    <strong>{hi ? "भुगतान:" : "Payment:"}</strong> {booking.payment_status}
+                    <strong>{hi ? "भुगतान:" : "Payment:"}</strong> {hi ? ({ unpaid: "भुगतान बाकी", processing: "जाँच में", paid: "भुगतान हो गया" }[booking.payment_status] || booking.payment_status) : booking.payment_status}
                   </p>
 
                   <div className="staff-status-controls">
