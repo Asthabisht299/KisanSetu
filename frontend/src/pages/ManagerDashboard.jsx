@@ -21,7 +21,9 @@ const initialFilters = {
   payment_status: "",
 };
 
-export default function ManagerDashboard() {\n  const { language } = useLanguage();\n  const hi = language === "hi";
+export default function ManagerDashboard() {
+  const { language } = useLanguage();
+  const hi = language === "hi";
   const navigate = useNavigate();
 
   const [slots, setSlots] = useState([]);
