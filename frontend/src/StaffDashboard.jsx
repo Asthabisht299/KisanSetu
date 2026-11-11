@@ -7,13 +7,13 @@ import { useLanguage } from "./context/LanguageContext";
 const STATUS_OPTIONS = [
   { value: "pending", label: hi ? "पुष्टि बाकी" : hi ? "पुष्टि बाकी" : "Pending" },
   { value: "confirmed", label: hi ? "पक्की" : hi ? "पक्की बुकिंग" : "Confirmed" },
-  { value: "checked_in", label: hi ? "केंद्र पहुँच गए" : "Checked In" },
+  { value: "checked_in", label: "Checked In" },
   {
     value: "procurement_in_progress",
-    label: hi ? "फसल की जाँच चल रही है" : "Procurement In Progress",
+    label: "Procurement In Progress",
   },
-  { value: "completed", label: hi ? "पूरी हुई" : "Completed" },
-  { value: "cancelled", label: hi ? "रद्द" : "Cancelled" },
+  { value: "completed", label: "Completed" },
+  { value: "cancelled", label: "Cancelled" },
 ];
 
 export default function StaffDashboard() {\n  const { language } = useLanguage();\n  const hi = language === "hi";
@@ -350,7 +350,7 @@ export default function StaffDashboard() {\n  const { language } = useLanguage()
                           key={option.value}
                           value={option.value}
                         >
-                          {option.label}
+                          {hi ? ({ pending: "पुष्टि बाकी", confirmed: "पक्की", checked_in: "केंद्र पहुँच गए", procurement_in_progress: "फसल की जाँच चल रही है", completed: "पूरी हुई", cancelled: "रद्द" }[option.value]) : option.label}
                         </option>
                       ))}
                     </select>
