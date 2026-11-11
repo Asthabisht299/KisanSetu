@@ -145,6 +145,11 @@ export default function MyBookings() {
     }).format(date);
   }
 
+  function cropLabel(crop) {
+    if (!isHindi) return crop;
+    return ({ Wheat: "गेहूँ", Rice: "धान", Maize: "मक्का", Mustard: "सरसों", Barley: "जौ", Other: "अन्य" })[crop] || crop;
+  }
+
   function getStatus(booking) {
     return String(booking.status || "pending").toLowerCase();
   }
@@ -358,7 +363,7 @@ export default function MyBookings() {
               <article className="centre-card" key={booking.id}>
                 <span className="centre-icon">🌾</span>
 
-                <h3>{booking.crop_type || (isHindi ? "फसल" : "Crop")}</h3>
+                <h3>{cropLabel(booking.crop_type) || (isHindi ? "फसल" : "Crop")}</h3>
 
                 <p>
                   <strong>{isHindi ? "बुकिंग नंबर:" : "Booking reference:"}</strong>{" "}
