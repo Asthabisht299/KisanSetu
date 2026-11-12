@@ -1324,7 +1324,9 @@ app.get(
   }
 );
 
-/* -------------------- FARMER PAYMENT HISTORY -------------------- */
+
+
+// -------------------- FARMER PAYMENT HISTORY --------------------
 
 app.get("/api/payments/my", authenticateToken, async (req, res) => {
   try {
@@ -1366,10 +1368,4 @@ app.get("/api/payments/my", authenticateToken, async (req, res) => {
       message: "Unable to fetch payment history.",
     });
   }
-});
-
-// -------------------- START SERVER --------------------
-
-app.listen(PORT, () => {
-  console.log(`KisanSetu backend running at http://localhost:${PORT}`);
 });
