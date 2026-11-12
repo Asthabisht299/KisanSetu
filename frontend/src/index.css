@@ -226,3 +226,232 @@ button:disabled { cursor: not-allowed; opacity: .65; }
 
 /* Accessible helper text */
 .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+
+/* Responsive layout improvements — tablet, mobile and narrow screens */
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+}
+body {
+  overflow-x: hidden;
+}
+img, svg, video, canvas {
+  max-width: 100%;
+}
+input, select, textarea, button {
+  max-width: 100%;
+}
+.main-section, .staff-dashboard, .manager-dashboard {
+  min-width: 0;
+}
+.booking-card, .booking-aside, .centre-card, .stat-card,
+.staff-booking-card, .manager-panel, .login-card, .register-card,
+.staff-login-card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.booking-card input, .booking-card select, .booking-card textarea,
+.booking-actions input, .booking-filters input, .booking-filters select,
+.manager-filters input, .manager-filters select,
+.staff-status-controls select {
+  min-width: 0;
+}
+.manager-table-wrap, .staff-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.manager-table-wrap table {
+  white-space: nowrap;
+}
+button, .primary-button, .booking-button, .login-button,
+.register-button, .staff-login-button, .manager-button {
+  touch-action: manipulation;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    min-height: 68px;
+    gap: 12px;
+  }
+  .brand {
+    font-size: 20px;
+  }
+  .brand small {
+    max-width: 230px;
+    line-height: 1.35;
+  }
+  .hero {
+    min-height: auto;
+  }
+  .booking-layout {
+    align-items: start;
+  }
+  .manager-dashboard, .staff-dashboard {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  .manager-header, .staff-dashboard-header {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: 10px 16px;
+  }
+  .brand {
+    gap: 8px;
+    font-size: 18px;
+  }
+  .brand-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    font-size: 20px;
+  }
+  .brand small {
+    max-width: 190px;
+    font-size: 9px;
+  }
+  .nav-toggle {
+    min-height: 42px;
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+  .nav-links {
+    max-height: calc(100vh - 68px);
+    overflow-y: auto;
+    padding: 12px 16px 18px;
+  }
+  .nav-links a, .nav-links select {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .hero {
+    padding: 38px 20px 32px;
+  }
+  .hero h1 {
+    font-size: clamp(31px, 9vw, 43px);
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+  }
+  .hero-content > p, .section-heading p {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .hero-visual {
+    min-height: 205px;
+    border-radius: 28px;
+  }
+  .field-label {
+    left: 5%;
+    bottom: 8%;
+    max-width: 90%;
+    padding: 10px 12px;
+  }
+  .quick-stats {
+    padding: 20px;
+  }
+  .main-section {
+    padding: 34px 16px;
+  }
+  .section-heading {
+    margin-bottom: 22px;
+  }
+  .section-heading h1, .section-heading h2 {
+    font-size: clamp(24px, 7vw, 31px);
+  }
+  .booking-card, .booking-aside, .centre-card,
+  .staff-bookings-section, .manager-section {
+    padding: 17px;
+    border-radius: 14px;
+  }
+  .booking-card label {
+    margin-top: 14px;
+  }
+  .booking-card input, .booking-card select,
+  .booking-card textarea, .booking-actions input,
+  .booking-actions select, .booking-filters input,
+  .booking-filters select, .manager-filters input,
+  .manager-filters select, .staff-status-controls select {
+    min-height: 46px;
+    font-size: 16px;
+  }
+  .stats-grid, .staff-stats, .manager-overview {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .stat-card {
+    padding: 14px;
+  }
+  .stat-card h2 {
+    font-size: 23px;
+    overflow-wrap: anywhere;
+  }
+  .staff-dashboard, .manager-dashboard {
+    padding: 22px 14px;
+  }
+  .staff-dashboard-header, .manager-header {
+    padding: 18px;
+    border-radius: 14px;
+  }
+  .staff-dashboard-header h1, .manager-header h1 {
+    font-size: 24px;
+    overflow-wrap: anywhere;
+  }
+  .staff-dashboard-header p, .manager-header p {
+    overflow-wrap: anywhere;
+  }
+  .staff-bookings-section, .manager-section {
+    margin-top: 18px;
+  }
+  .manager-filters, .booking-filters {
+    gap: 10px;
+  }
+  .manager-table-wrap table {
+    min-width: 720px;
+  }
+  .login-page, .register-page, .staff-login-page {
+    min-height: calc(100svh - 68px);
+    padding: 22px 14px;
+  }
+  .login-card, .register-card, .staff-login-card {
+    padding: 24px 18px;
+    border-radius: 17px;
+  }
+  .login-welcome h1, .register-welcome h1,
+  .staff-login-title {
+    font-size: clamp(23px, 7vw, 29px);
+    overflow-wrap: anywhere;
+  }
+  .footer {
+    padding: 28px 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .brand small {
+    max-width: 150px;
+  }
+  .nav-toggle {
+    padding: 8px 9px;
+    font-size: 11px;
+  }
+  .stats-grid, .staff-stats, .manager-overview {
+    grid-template-columns: 1fr;
+  }
+  .hero {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .field-label {
+    gap: 8px;
+    padding: 9px 10px;
+  }
+  .field-label > span {
+    font-size: 21px;
+  }
+}
