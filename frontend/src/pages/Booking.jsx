@@ -30,7 +30,7 @@ export default function Booking() {
       setError(
         isHindi
           ? "बुकिंग की जानकारी नहीं मिल रही है। कृपया कुछ देर बाद दोबारा कोशिश करें।"
-          : "बुकिंग के समय नहीं मिल पाए। कृपया इंटरनेट या सर्वर चालू होने की जाँच करें।"
+          : "Unable to load available slots. Please check your internet connection or make sure the server is running."
       );
     } finally {
       setLoading(false);
@@ -182,7 +182,7 @@ export default function Booking() {
           <p>
             {isHindi
               ? "अपनी फसल, खरीद केंद्र और आने का समय चुनें। फिर बताएं कि आप कितनी फसल लाएंगे।"
-              : "नीचे दिए गए समय में से चुनें कि आप किस दिन और किस समय अपनी फसल केंद्र पर ला सकते हैं।"}
+              : "Choose a date and time below to bring your crop to the procurement centre."}
           </p>
         </div>
       </div>
@@ -207,7 +207,7 @@ export default function Booking() {
         <p>
           {isHindi
             ? "अभी कोई खाली समय नहीं है। कृपया बाद में फिर देखें।"
-            : "फिलहाल फसल लाने के लिए कोई समय खाली नहीं है। कृपया कुछ समय बाद फिर देखें।"}
+            : "No booking slots are currently available. Please check again later."}
         </p>
       ) : (
         <div className="centre-grid">

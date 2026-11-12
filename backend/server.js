@@ -1324,8 +1324,48 @@ app.get(
   }
 );
 
-// -------------------- START SERVER --------------------
 
-app.listen(PORT, () => {
-  console.log(`KisanSetu backend running at http://localhost:${PORT}`);
+
+// -------------------- FARMER PAYMENT HISTORY --------------------
+
+app.get("/api/payments/my", authenticateToken, async (req, res) => {
+  try {
+    const [payments] = await db.execute(
+      `SELECT
+         pt.id,
+         pt.transaction_reference,
+         pt.booking_id,
+         pt.transaction_type,
+         pt.amount,
+         pt.currency,
+         pt.status,
+         pt.payment_method,
+         pt.description,
+         pt.created_at,
+         b.booking_reference,
+         ps.crop_type
+       FROM payment_transactions pt
+       LEFT JOIN bookings b
+         ON pt.booking_id = b.id
+       LEFT JOIN procurement_slots ps
+         ON b.slot_id = ps.id
+       WHERE pt.farmer_id = ?
+       ORDER BY pt.created_at DESC
+       LIMIT 100`,
+      [req.farmerId]
+    );
+
+    return res.status(200).json({
+      success: true,
+      count: payments.length,
+      payments,
+    });
+  } catch (error) {
+    console.error("Farmer payment history error:", error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: "Unable to fetch payment history.",
+    });
+  }
 });

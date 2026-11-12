@@ -165,7 +165,7 @@ export default function MyBookings() {
         cancelled: "बुकिंग रद्द है",
       };
 
-      return labels[status] || "स्थिति की जानकारी उपलब्ध नहीं";
+      return labels[status] || (isHindi ? "स्थिति की जानकारी उपलब्ध नहीं" : "Status information unavailable");
     }
 
     const labels = {
